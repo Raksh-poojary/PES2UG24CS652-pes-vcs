@@ -21,6 +21,9 @@
 //commit 3
 //Implemented file staging logic
 
+//commit 4
+//Integrated object storage with index
+
 #include "index.h"
 #include <stdio.h>
 #include <stdlib.h>
