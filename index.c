@@ -18,6 +18,9 @@
 //commit 2
 // Implemented index saving with atomic writes
 
+//commit 3
+//Implemented file staging logic
+
 #include "index.h"
 #include <stdio.h>
 #include <stdlib.h>
