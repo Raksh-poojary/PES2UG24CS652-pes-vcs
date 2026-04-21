@@ -24,6 +24,9 @@
 //commit 4
 //Integrated object storage with index
 
+//commit 5
+//Verified staging and status functionality
+
 #include "index.h"
 #include <stdio.h>
 #include <stdlib.h>
