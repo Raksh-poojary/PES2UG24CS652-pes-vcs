@@ -14,6 +14,10 @@
 
 //commit 3
 //Ensured deterministic ordering of tree entries
+
+//commit 4
+//Removed index dependency from tree module
+
 #include "tree.h"
 #include "index.h"
 #include <stdio.h>
