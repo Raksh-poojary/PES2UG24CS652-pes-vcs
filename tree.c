@@ -12,6 +12,8 @@
 //commit 2
 // Verified tree parse and serialize functionality
 
+//commit 3
+//Ensured deterministic ordering of tree entries
 #include "tree.h"
 #include "index.h"
 #include <stdio.h>
