@@ -8,8 +8,12 @@
 // PROVIDED functions: compute_hash, object_path, object_exists, hash_to_hex, hex_to_hash
 // TODO functions:     object_write, object_read
 
+//commit 2
 // Added header creation for object storage
 // Using SHA-256 for content-addressable storage
+
+//commit 3
+// Separated header and data for clarity
 
 #include "pes.h"
 #include <stdio.h>
