@@ -18,6 +18,9 @@
 //commit 4
 //Removed index dependency from tree module
 
+//commit 5
+//Completed testing for tree serialization
+
 #include "tree.h"
 #include "index.h"
 #include <stdio.h>
