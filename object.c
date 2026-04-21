@@ -15,9 +15,12 @@
 //commit 3
 // Separated header and data for clarity
 
-
 //commit 4
 // Deduplication: avoid storing same object twice
+
+//commit 5
+//Added documentation for object storage
+
 #include "pes.h"
 #include <stdio.h>
 #include <stdlib.h>
