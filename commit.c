@@ -18,6 +18,8 @@
 //Added parent linking
 
 
+//commit 3
+//Integrated HEAD updates
 
 #include "commit.h"
 #include "index.h"
