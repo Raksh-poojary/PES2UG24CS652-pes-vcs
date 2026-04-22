@@ -24,6 +24,9 @@
 //commit 4
 //Enabled commit history traversal
 
+//commit 5
+// Verified log output with multiple commits
+
 #include "commit.h"
 #include "index.h"
 #include "tree.h"
