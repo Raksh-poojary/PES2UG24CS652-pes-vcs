@@ -196,6 +196,114 @@ int head_update(const ObjectID *new_commit) {
 int commit_create(const char *message, ObjectID *commit_id_out) {
     // TODO: Implement commit creation
     // (See Lab Appendix for logical steps)
-    (void)message; (void)commit_id_out;
-    return -1;
+    ObjectID tree_id;
+
+    if (tree_from_index(&tree_id) != 0)
+        return -1;
+
+    char tree_hex[65];
+    hash_to_hex(&tree_id, tree_hex);
+
+    // read current HEAD
+    char parent_hex[65] = "";
+    FILE *f = fopen(HEAD_FILE, "r");
+
+    if (f) {
+        char line[128];
+        fgets(line, sizeof(line), f);
+        fclose(f);
+
+        if (strncmp(line, "ref:", 4) != 0) {
+            sscanf(line, "%64s", parent_hex);
+        }
+    }
+
+    time_t now = time(NULL);
+
+    Commit commit;
+
+    // tree
+    commit.tree = tree_id;
+
+   // parent
+   if (head_read(&commit.parent) == 0) {
+       commit.has_parent = 1;
+   } else {
+       commit.has_parent = 0;
+   }
+
+   // author + time
+   snprintf(commit.author, sizeof(commit.author), "%s", pes_author());
+   commit.timestamp = (uint64_t)time(NULL);
+
+   // message
+   snprintf(commit.message, sizeof(commit.message), "%s", message);
+
+   // serialize
+   void *data;
+   size_t len;
+
+   if (commit_serialize(&commit, &data, &len) != 0)
+       return -1;
+
+   // store
+   if (object_write(OBJ_COMMIT, data, len, commit_id_out) != 0) {
+       free(data);
+       return -1;
+   }
+
+   free(data);
+
+   // update HEAD (IMPORTANT)
+   if (head_update(commit_id_out) != 0)
+       return -1;
+
+    return 0;
 }
+
+int commit_log(void) {
+    FILE *f = fopen(".pes/HEAD", "r");
+    if (!f) {
+        printf("No commits yet\n");
+        return 0;
+    }
+
+    char hash_hex[65];
+    fscanf(f, "%64s", hash_hex);
+    fclose(f);
+
+    ObjectID id;
+    hex_to_hash(hash_hex, &id);
+
+    while (1) {
+        ObjectType type;
+        void *data;
+        size_t len;
+
+        if (object_read(&id, &type, &data, &len) != 0)
+            break;
+
+        printf("commit %s\n", hash_hex);
+
+        char *content = (char *)data;
+        printf("%s\n", content);
+
+        // find parent
+        char *parent_line = strstr(content, "parent ");
+        if (!parent_line) {
+            free(data);
+            break;
+        }
+
+        char parent_hash[65];
+        sscanf(parent_line, "parent %64s", parent_hash);
+
+        hex_to_hash(parent_hash, &id);
+        strcpy(hash_hex, parent_hash);
+
+        free(data);
+    }
+
+    return 0;
+}
+
