@@ -21,6 +21,9 @@
 //commit 3
 //Integrated HEAD updates
 
+//commit 4
+//Enabled commit history traversal
+
 #include "commit.h"
 #include "index.h"
 #include "tree.h"
